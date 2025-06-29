@@ -12,7 +12,7 @@ all: \
 commit-and-push:
 	git add .
 	git commit -a -m ${VERSION}
-	git tag -a v${VERSION} -m v${VERSION}
+	git tag v1.0.0-lw
 	git push && git push --tags
 	
 cidrs/ipv4-and-ipv6.single-line.json: cidrs/ipv4-and-ipv6.json
