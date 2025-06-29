@@ -1,4 +1,3 @@
-NEED_COMMIT=$(shell git status --porcelain)
 VERSION=$(shell date -Iseconds -u)
 
 all: \
@@ -11,7 +10,6 @@ all: \
 	cidrs/apache2-remote-ip.conf
 
 commit-and-push:
-	@[ "${NEED_COMMIT}" ] || (echo Nothing to commit; exit 0)
 	git add .
 	git commit -a -m ${VERSION}
 	git tag -a v${VERSION} -m v${VERSION}
