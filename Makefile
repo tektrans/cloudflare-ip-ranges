@@ -14,7 +14,7 @@ commit-and-push:
 	@[ "${NEED_COMMIT}" ] || (echo Nothing to commit; exit 0)
 	git add .
 	git commit -a -m ${VERSION}
-	git tags -a v${VERSION} -m v${VERSION}
+	git tag -a v${VERSION} -m v${VERSION}
 	git push && git push --tags
 	
 cidrs/ipv4-and-ipv6.single-line.json: cidrs/ipv4-and-ipv6.json
