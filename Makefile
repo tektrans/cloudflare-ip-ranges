@@ -10,9 +10,11 @@ all: \
 	cidrs/ipv4-and-ipv6.single-line.json\
 	cidrs/apache2-remote-ip.conf
 
-commit-and-push:
+commit:
 	git add .
 	git commit -a -m ${TS_ISO8601}
+
+push:
 	git tag v1.0.0-${TS_COMPACT}
 	git push && git push --tags
 	
