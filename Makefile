@@ -1,4 +1,5 @@
-VERSION=$(shell date -Iseconds -u)
+TS_ISO8601=$(shell date -Iseconds -u)
+TS_COMPACT=$(shell date +%Y%m%d%H%M%S)
 
 all: \
 	cidrs/ipv4.json cidrs/ipv6.json cidrs/ipv4-and-ipv6.json \
@@ -11,8 +12,8 @@ all: \
 
 commit-and-push:
 	git add .
-	git commit -a -m ${VERSION}
-	git tag v1.0.0-lw
+	git commit -a -m ${TS_ISO8601}
+	git tag v1.0.0-${TS_COMPACT}
 	git push && git push --tags
 	
 cidrs/ipv4-and-ipv6.single-line.json: cidrs/ipv4-and-ipv6.json
