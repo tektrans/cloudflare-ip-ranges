@@ -5,7 +5,8 @@ Compilation of cloudflare's IP ranges.
 All available formats are available on "[cidrs](cidrs/)" directory.
 
 - [apache2-remote-ip.conf](cidrs/apache2-remote-ip.conf):
-  you can use this file for configuring mod_remoteip of your apache2 web sever.
+  you can use this file for configuring mod_remoteip of your apache2 web server
+  if your apache2 is behind cloudflare service.
 - [ipv4-and-ipv6.json](cidrs/ipv4-and-ipv6.json):
   all cloudflare's CIDR (IPv4 and IPv6) in JSON format.
 - [ipv4-and-ipv6.txt](cidrs/ipv4-and-ipv6.txt):
