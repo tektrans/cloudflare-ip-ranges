@@ -8,7 +8,8 @@ all: \
 	cidrs/ipv4.single-line.json cidrs/ipv6.single-line.json \
 	cidrs/ipv4-and-ipv6.single-line.txt \
 	cidrs/ipv4-and-ipv6.single-line.json\
-	cidrs/apache2-remote-ip.conf
+	cidrs/apache2-remote-ip.conf \
+	cidrs/nginx-http-realip-module.conf
 
 commit:
 	git add .
@@ -35,6 +36,14 @@ cidrs/ipv6.single-line.txt: cidrs/ipv6.json
 
 cidrs/ipv4.single-line.txt: cidrs/ipv4.json
 	jq -r '.|@csv' cidrs/ipv4.json > cidrs/ipv4.single-line.txt
+
+cidrs/nginx-http-realip-module.conf: cidrs/ipv4-and-ipv6.json
+	echo "# Put these lines on your nginx http-real-ip configuration" > cidrs/nginx-http-realip-module.conf
+	echo >> cidrs/nginx-http-realip-module.conf
+	echo real_ip_header CF-Connecting-IP\; >> cidrs/nginx-http-realip-module.conf
+	echo >> cidrs/nginx-http-realip-module.conf
+	jq -r '.[]| "set_real_ip_from " + . + ";"' cidrs/ipv4-and-ipv6.json >> cidrs/nginx-http-realip-module.conf
+
 
 cidrs/apache2-remote-ip.conf: cidrs/ipv4-and-ipv6.json
 	echo "# Put these lines on your apache2's mod_remoteip configuration" > cidrs/apache2-remote-ip.conf
