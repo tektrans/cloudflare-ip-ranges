@@ -8,6 +8,7 @@ all: \
 	cidrs/ipv4.single-line.json cidrs/ipv6.single-line.json \
 	cidrs/ipv4-and-ipv6.single-line.txt \
 	cidrs/ipv4-and-ipv6.single-line.json\
+	cidrs/ipv4-and-ipv6.single-line.no-quotes.txt cidrs/ipv4.single-line.no-quotes.txt cidrs/ipv6.single-line.no-quotes.txt \
 	cidrs/apache2-remote-ip.conf \
 	cidrs/nginx-http-realip-module.conf
 
@@ -52,11 +53,20 @@ cidrs/apache2-remote-ip.conf: cidrs/ipv4-and-ipv6.json
 	echo >> cidrs/apache2-remote-ip.conf
 	jq -r '.[]| "RemoteIPTrustedProxy " + .' cidrs/ipv4-and-ipv6.json  >> cidrs/apache2-remote-ip.conf
 
+cidrs/ipv4-and-ipv6.single-line.no-quotes.txt: cidrs/ipv4-and-ipv6.json
+	jq  -r '.[]|. + ","'  cidrs/ipv4-and-ipv6.json |xargs echo |sed -e 's/,$$//' > cidrs/ipv4-and-ipv6.single-line.no-quotes.txt
+
 cidrs/ipv4-and-ipv6.txt: cidrs/ipv4-and-ipv6.json
 	jq -r .[] cidrs/ipv4-and-ipv6.json > cidrs/ipv4-and-ipv6.txt
 
+cidrs/ipv4.single-line.no-quotes.txt: cidrs/ipv4.json
+	jq  -r '.[]|. + ","'  cidrs/ipv4.json |xargs echo |sed -e 's/,$$//' > cidrs/ipv4.single-line.no-quotes.txt
+
 cidrs/ipv4.txt: cidrs/ipv4.json
 	jq -r .[] cidrs/ipv4.json > cidrs/ipv4.txt
+
+cidrs/ipv6.single-line.no-quotes.txt: cidrs/ipv6.json
+	jq  -r '.[]|. + ","'  cidrs/ipv6.json |xargs echo |sed -e 's/,$$//' > cidrs/ipv6.single-line.no-quotes.txt
 
 cidrs/ipv6.txt: cidrs/ipv6.json
 	jq -r .[] cidrs/ipv6.json > cidrs/ipv6.txt
